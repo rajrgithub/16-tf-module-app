@@ -22,12 +22,12 @@ resource "aws_iam_role" "role" {
   )
 }
 
-/*
+//Attach role to ec2 instances using profile
 resource "aws_iam_instance_profile" "profile" {
   name = "${var.env}-${var.component}-role"
   role = aws_iam_role.role.name
 }
-
+/*
 resource "aws_iam_policy" "policy" {
   name        = "${var.env}-${var.component}-parameter-store-policy"
   path        = "/"
