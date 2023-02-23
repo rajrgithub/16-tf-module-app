@@ -1,4 +1,5 @@
-/*resource "aws_iam_role" "role" {
+// Create AWS IAM roles to avoid configuring AWS credentials to get AWS Paramaters
+resource "aws_iam_role" "role" {
   name = "${var.env}-${var.component}-role"
 
   assume_role_policy = jsonencode({
@@ -21,6 +22,7 @@
   )
 }
 
+/*
 resource "aws_iam_instance_profile" "profile" {
   name = "${var.env}-${var.component}-role"
   role = aws_iam_role.role.name
