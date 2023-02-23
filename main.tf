@@ -27,7 +27,8 @@ resource "aws_iam_instance_profile" "profile" {
   name = "${var.env}-${var.component}-role"
   role = aws_iam_role.role.name
 }
-/*
+
+// Create policy to access the AWS Paramaters using the IAM role
 resource "aws_iam_policy" "policy" {
   name        = "${var.env}-${var.component}-parameter-store-policy"
   path        = "/"
@@ -45,7 +46,7 @@ resource "aws_iam_policy" "policy" {
           "ssm:GetParameters",
           "ssm:GetParameter"
         ],
-        "Resource" : "arn:aws:ssm:us-east-1:633788536644:parameter/${var.env}.${var.component}*"
+        "Resource" : "arn:aws:ssm:us-east-1:973130779128:parameter/${var.env}.${var.component}*"
       },
       {
         "Sid" : "VisualEditor1",
@@ -57,10 +58,11 @@ resource "aws_iam_policy" "policy" {
   })
 }
 
+// Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "role-attach" {
   role       = aws_iam_role.role.name
   policy_arn = aws_iam_policy.policy.arn
-}*/
+}
 
 resource "aws_security_group" "main" {
   name        = "${var.env}-${var.component}-security-group"
