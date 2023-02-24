@@ -111,6 +111,10 @@ resource "aws_launch_template" "main" {
   iam_instance_profile {
     arn = aws_iam_instance_profile.profile.arn
   }
+  // To create spot instances
+  instance_market_options {
+    market_type = "spot"
+  }
 }
 
 resource "aws_autoscaling_group" "asg" {
