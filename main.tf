@@ -107,6 +107,7 @@ resource "aws_launch_template" "main" {
   image_id               = data.aws_ami.centos8.id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
+  user_data              = base64encode(templatefile("${path.module}/user-data.sh", { component = var.component, env = var.env }))
   iam_instance_profile {
     arn = aws_iam_instance_profile.profile.arn
   }
