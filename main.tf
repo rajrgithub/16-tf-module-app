@@ -144,3 +144,15 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
+// create route53 dns records for apps
+resource "aws_route53_record" "app" {
+  zone_id = "Z06114989XPI89CB5K4C"
+  name    = "${var.component}-${var.env}.rajdevops.online"
+  // A  means IP Address i.e., dns name is pointing to IP Address
+  //type    = "A"
+  // a name pointing to a name
+  // lb is not giving IP i.e.,giving dns name -- mask or give alias name to lb dns name with my domain name
+  type    = "CNAME"
+  ttl     = 30
+  records = [var.alb]
+}
