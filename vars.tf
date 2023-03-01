@@ -13,3 +13,4 @@ variable "alb" {}
 variable "listener" {}
 variable "listener_priority" {}
 variable "alb_arn" {}
+variable "monitor_cidr" {}
