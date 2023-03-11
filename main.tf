@@ -163,7 +163,7 @@ resource "aws_autoscaling_policy" "cpu-tracking-policy" {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
-    target_value = 30.0
+    target_value = 50.0
   }
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }
