@@ -155,6 +155,20 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
+# Auto scaling policy to increase the number of instances based on load
+resource "aws_autoscaling_policy" "cpu-tracking-policy" {
+  name        = "whenCPULoadIncrease"
+  policy_type = "TargetTrackingScaling"
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 30.0
+  }
+  autoscaling_group_name = aws_autoscaling_group.asg.name
+}
+
+
 // create route53 dns records for apps
 resource "aws_route53_record" "app" {
   zone_id = "Z06114989XPI89CB5K4C"
