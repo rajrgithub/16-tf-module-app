@@ -221,6 +221,8 @@ resource "aws_lb_listener_rule" "backend_rule" {
 
 
 // This is only for frontend
+// Commented for HTTPS
+/*
 resource "aws_lb_listener" "frontend" {
   count             = var.listener_priority == 0 ? 1 : 0
   load_balancer_arn = var.alb_arn
@@ -230,5 +232,38 @@ resource "aws_lb_listener" "frontend" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.target_group.arn
+  }
+}*/
+
+// This is only for frontend
+resource "aws_lb_listener" "frontend" {
+  count             = var.listener_priority == 0 ? 1 : 0
+  load_balancer_arn = var.alb_arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:us-east-1:973130779128:certificate/f08735eb-75e9-4078-8031-f2411182546e"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group.arn
+  }
+}
+
+// Redirect to HTPPS if someone access with HTTP
+resource "aws_lb_listener" "frontend_http" {
+  count             = var.listener_priority == 0 ? 1 : 0
+  load_balancer_arn = var.alb_arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
